@@ -10,6 +10,8 @@ if (!process.env.DATABASE_URL) {
 // handshake to Postgres on every HTTP request.
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
+  // Allow up to 15s for serverless Postgres (e.g. Neon) to wake from suspend.
+  connectionTimeoutMillis: 15000,
 });
 
 // Log unexpected errors on idle background clients so the process doesn't crash silently.
